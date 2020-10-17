@@ -5,7 +5,7 @@
         <h2>id : ${task.id}のタスク詳細ページ</h2>
 
 
-        <form method="post" action="${pageContext.request.contextPath}/update">
+        <form method="POST" action="${pageContext.request.contextPath}/update">
             <c:import url="_form.jsp" />
 
         </form>
