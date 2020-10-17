@@ -37,7 +37,7 @@ public class NewServlet extends HttpServlet {
         request.setAttribute("task", new task());
 
 
-        RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/tasks/new.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasks/new.jsp");
         rd.forward(request, response);
 
     }
