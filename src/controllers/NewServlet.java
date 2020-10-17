@@ -1,9 +1,8 @@
 package controllers;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 
-import javax.persistence.EntityManager;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import models.task;
-import utils.DBUtil;
 
 /**
  * Servlet implementation class NewServlet
@@ -32,31 +30,15 @@ public class NewServlet extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO Auto-generated method stub
-        EntityManager em = DBUtil.createEntityManager();
-        em.getTransaction().begin();
 
-        //taskのインスタンスを生成
-        task t = new task();
-
-        // mの各フィールドにデータを代入
-        String content = "hello";
-        t.setContent(content);
-
-        //現在日時を取得
-        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-            t.setCreated_at(currentTime);
-            t.setUpdated_at(currentTime);
+        request.setAttribute("_token", request.getSession().getId());
 
 
-            //データベースに保存
-            em.persist(t);
-            em.getTransaction().commit();
+        request.setAttribute("task", new task());
 
-            //自動採番されたIDの値を表示
-        response.getWriter().append(Integer.valueOf(t.getId()).toString());
 
-        em.close();
+        RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/tasks/new.jsp");
+        rd.forward(request, response);
 
     }
 
